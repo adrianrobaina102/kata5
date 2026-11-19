@@ -1,0 +1,40 @@
+### Maven / Java / Compilación y binarios ###
+target/
+out/
+build/
+bin/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.exe
+dependency-reduced-pom.xml
+!.mvn/wrapper/maven-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+
+### Eclipse / VS Code ###
+.classpath
+.project
+.settings/
+.vscode/
+
+### Logs, temporales y credenciales ###
+*.log
+*.tmp
+*.bak
+.env
+.env.*
+*.pem
+*.key
+
+### Sistema Operativo ###
+.DS_Store
+Thumbs.db
+Desktop.ini
