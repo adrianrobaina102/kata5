@@ -1,2 +1,3 @@
 http://localhost:8500/v1/health/service/fibonacci_service_v1
 http://localhost:8500/v1/health/service/random_service_v1
+http://localhost:8500/v1/health/service/prime_numbers_service_v1

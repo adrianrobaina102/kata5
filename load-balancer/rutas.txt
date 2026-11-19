@@ -11,7 +11,7 @@ RUTAS DE PRUEBA - KATA 5 (NGINX + CONSUL)
   http://localhost:8080/api/v1/random/?n=5
 
 - Números primos (para cuando lo montes en el vídeo):
-  http://localhost:8080/api/v1/primes/?n=7
+  http://localhost:8080/api/v1/prime_numbers/?n=7
 
 
 2) CONSUL (Puerto 8500)
