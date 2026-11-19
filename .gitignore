@@ -1,40 +1,45 @@
-### Maven / Java / Compilación y binarios ###
 target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+.kotlin
+
 out/
-build/
-bin/
 *.class
 *.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.exe
-dependency-reduced-pom.xml
-!.mvn/wrapper/maven-wrapper.jar
+*.log
+
 
 ### IntelliJ IDEA ###
-.idea/
-*.iml
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
 *.iws
+*.iml
 *.ipr
 
-### Eclipse / VS Code ###
+### Eclipse ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
 .vscode/
 
-### Logs, temporales y credenciales ###
-*.log
-*.tmp
-*.bak
-.env
-.env.*
-*.pem
-*.key
-
-### Sistema Operativo ###
+### Mac OS ###
 .DS_Store
-Thumbs.db
-Desktop.ini
