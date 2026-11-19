@@ -1,0 +1,53 @@
+====================================================
+RUTAS DE PRUEBA - KATA 5 (NGINX + CONSUL)
+====================================================
+
+1) PETICIONES AL BALANCEADOR (NGINX - Puerto 8080)
+----------------------------------------------------
+- Fibonacci:
+  http://localhost:8080/api/v1/fibonacci/?n=10
+
+- Random:
+  http://localhost:8080/api/v1/random/?n=5
+
+- Números primos (para cuando lo montes en el vídeo):
+  http://localhost:8080/api/v1/primes/?n=7
+
+
+2) CONSUL (Puerto 8500)
+----------------------------------------------------
+- Interfaz web (UI):
+  http://localhost:8500
+
+- Ver réplicas registradas de cada servicio:
+  http://localhost:8500/v1/health/service/fibonacci_service_v1
+  http://localhost:8500/v1/health/service/random_service_v1
+  http://localhost:8500/v1/health/service/primes_service_v1
+
+
+3) ARGUMENTOS DE ARRANQUE POR RÉPLICA (ID host puerto consul)
+----------------------------------------------------
+- Fibonacci:
+  f1 localhost 8081 http://localhost:8500
+  f2 localhost 8082 http://localhost:8500
+
+- Random:
+  r1 localhost 8083 http://localhost:8500
+  r2 localhost 8084 http://localhost:8500
+
+- Números primos (vídeo):
+  p1 localhost 8085 http://localhost:8500
+  p2 localhost 8086 http://localhost:8500
+
+
+4) COMANDOS ÚTILES PARA EL VÍDEO / TERMINAL
+----------------------------------------------------
+- Levantar Consul + NGINX (desde load-balancer/):
+  docker compose up -d --wait
+
+- Recargar NGINX tras editar webservice.conf (desde load-balancer/):
+  docker compose restart nginx
+
+- Probar cabeceras X-Node y X-Backend en PowerShell:
+  curl.exe -i "http://localhost:8080/api/v1/fibonacci/?n=10"
+  curl.exe -i "http://localhost:8080/api/v1/random/?n=5"
