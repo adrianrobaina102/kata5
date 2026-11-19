@@ -70,7 +70,7 @@ public class WebService {
         context.result(new Gson().toJson(randomNumber(n)));
     }
 
-    private int[] randomNumber(int n) {
+    int[] randomNumber(int n) {
         int[] result = new int[n];
         Random random = new Random();
         for (int i = 0; i < n; i++) {

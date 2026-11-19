@@ -67,7 +67,7 @@ public class WebService {
         context.result(new Gson().toJson(fibonacci(terms)));
     }
 
-    private int[] fibonacci(int n) {
+    int[] fibonacci(int n) {
         int[] result = new int[n];
         int a = 0;
         int b = 1;
