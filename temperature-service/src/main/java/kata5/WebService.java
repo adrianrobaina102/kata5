@@ -41,10 +41,7 @@ public class WebService {
         try (HttpClient client = HttpClient.newHttpClient()) {
             CompletableFuture<HttpResponse<String>> response =
                     client.sendAsync(requestWith(json()), HttpResponse.BodyHandlers.ofString());
-            response.thenAccept(this::checkStatusCode).join();
-        } catch (Exception e) {
-            System.err.println("Consul registration error: " + e.getMessage());
-            throw new RuntimeException(e);
+            response.thenAccept(this::checkStatusCode).whenComplete((res, ex) -> client.close());
         }
     }
 
