@@ -159,9 +159,9 @@ curl -i "http://localhost:8080/api/v1/prime_numbers/?n=7"
 
 ## Repeticiones de la kata
 
-- **iteration-1 (completada):** Despliegue inicial con tres servicios independientes (`fibonacci-service`, `random-service`, `prime-numbers-service`), sus respectivos clientes y configuración dinámica en NGINX + Consul.
-- **iteration-2 (pendiente):** Repetición con variación pequeña (pendiente de realizar).
-- **iteration-3 (pendiente):** Repetición con variación pequeña (pendiente de realizar).
+- **iteration-1 (`develop`, completada):** Despliegue inicial en el puerto público `8080` con tres servicios independientes (`fibonacci-service`, `random-service`, `prime-numbers-service`), réplicas `f1`/`f2`, `r1`/`r2`, `p1`/`p2`, sus respectivos clientes y configuración dinámica en NGINX + Consul.
+- **iteration-2 (`iteration-2`, en progreso):** Repetición con variaciones pequeñas: cambio de dominio (`temperature-service` y `distance-service`), nuevos identificadores de réplica (`t1`/`t2`, `d1`/`d2`) y cambio del puerto público de NGINX a `8090:80`.
+- **iteration-3 (`iteration-3`, pendiente):** Repetición con variación pequeña (pendiente de realizar).
 
 ---
 
