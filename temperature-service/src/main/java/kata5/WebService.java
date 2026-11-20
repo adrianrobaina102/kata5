@@ -64,9 +64,9 @@ public class WebService {
 
     private void fahrenheitToKelvin(Context context) {
         try {
-            int f = Integer.parseInt(context.queryParam("f"));
+            int fahrenheit = Integer.parseInt(context.queryParam("f"));
             context.header("X-Node", id);
-            context.result(new Gson().toJson(fahrenheitToKelvin(f)));
+            context.result(new Gson().toJson(fahrenheitToKelvin(fahrenheit)));
         } catch (NumberFormatException | NullPointerException e) {
             context.status(400).result("Missing or invalid query parameter 'f'");
         }
