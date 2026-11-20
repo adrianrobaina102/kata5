@@ -2,13 +2,13 @@
 RUTAS DE PRUEBA - KATA 5 (ITERATION 2)
 ====================================================
 
-1) PETICIONES AL BALANCEADOR (NGINX - Puerto 8080)
+1) PETICIONES AL BALANCEADOR (NGINX - Puerto 8090)
 ----------------------------------------------------
 - Distancia:
-  http://localhost:8080/api/v1/distance/?km=10
+  http://localhost:8090/api/v1/distance/?km=10
 
 - Temperatura:
-  http://localhost:8080/api/v1/temperature/?c=25
+  http://localhost:8090/api/v1/temperature/?f=77
 
 
 2) CONSUL (Puerto 8500)
