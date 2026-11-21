@@ -160,8 +160,8 @@ curl -i "http://localhost:8080/api/v1/prime_numbers/?n=7"
 ## Repeticiones de la kata
 
 - **iteration-1 (`develop`, completada):** Despliegue inicial en el puerto público `8080` con tres servicios independientes (`fibonacci-service`, `random-service`, `prime-numbers-service`), réplicas `f1`/`f2`, `r1`/`r2`, `p1`/`p2`, sus respectivos clientes y configuración dinámica en NGINX + Consul.
-- **iteration-2 (`iteration-2`, en progreso):** Repetición con variaciones pequeñas: cambio de dominio (`temperature-service` y `distance-service`), nuevos identificadores de réplica (`t1`/`t2`, `d1`/`d2`) y cambio del puerto público de NGINX a `8090:80`.
-- **iteration-3 (`iteration-3`, pendiente):** Repetición con variación pequeña (pendiente de realizar).
+- **iteration-2 (`iteration-2`, completada):** Repetición con variaciones pequeñas: cambio de dominio (`temperature-service` y `distance-service`), nuevos identificadores de réplica (`t1`/`t2`, `d1`/`d2`), cambio del puerto público de NGINX a `8090:80`, validación de parámetros (`400 Bad Request`) y tests unitarios JUnit 5.
+- **iteration-3 (`iteration-3`, completada):** Repetición en el puerto `8080` implementando dos versiones de un mismo dominio (`books-service` compartido y parametrizado por versión `v1`/`v2`), registradas en Consul como `books_service_v1` (búsqueda por género) y `books_service_v2` (búsqueda por título), réplicas `b1`–`b4`, un cliente único (`books-client`) consultando ambas rutas y tests unitarios JUnit 5.
 
 ---
 
@@ -169,13 +169,19 @@ curl -i "http://localhost:8080/api/v1/prime_numbers/?n=7"
 
 ### Pruebas unitarias (JUnit 5)
 
-- `fibonacci-service` (`kata5.WebServiceTest`): 3 tests ejecutados, 3 superados, 0 fallidos (`n=0`, `n=1`, `n=7`).
-- `random-service` (`kata5.WebServiceTest`): 2 tests ejecutados, 2 superados, 0 fallidos (`n=0`, rango `[0, 100)`).
-- `prime-numbers-service` (`kata5.WebServiceTest`): 3 tests ejecutados, 3 superados, 0 fallidos (negativos/0/1, primos y compuestos).
+- **iteration-1 (`develop`):**
+  - `fibonacci-service` (`kata5.WebServiceTest`): 3 tests ejecutados, 3 superados, 0 fallidos (`n=0`, `n=1`, `n=7`).
+  - `random-service` (`kata5.WebServiceTest`): 2 tests ejecutados, 2 superados, 0 fallidos (`n=0`, rango `[0, 100)`).
+  - `prime-numbers-service` (`kata5.WebServiceTest`): 3 tests ejecutados, 3 superados, 0 fallidos (negativos/0/1, primos y compuestos).
+- **iteration-2 (`iteration-2`):**
+  - `temperature-service` (`kata5.WebServiceTest`): 4 tests ejecutados, 4 superados, 0 fallidos (`32 -> 273`, `77 -> 298`, `212 -> 373`, `-40 -> 233`).
+  - `distance-service` (`kata5.WebServiceTest`): 3 tests ejecutados, 3 superados, 0 fallidos (`0.0 -> 0.0`, `1.609344 -> 1.0`, `10.0 -> 6.213712`).
+- **iteration-3 (`iteration-3`):**
+  - `books-service` (`kata5.WebServiceTest`): 4 tests ejecutados, 4 superados, 0 fallidos (filtrado por género, género vacío, búsqueda por título sin distinguir mayúsculas, título inexistente).
 
 ### Reparto en vivo con NGINX y Consul
 
-Ejemplo de salida observada en `prime-numbers-client` con `p1` y `p2` activos:
+Salida observada en `prime-numbers-client` (`iteration-1`, puerto `8080`, réplicas `p1` y `p2`):
 
 ```text
 Node: p1 | Body: false
@@ -184,10 +190,26 @@ Node: p1 | Body: true
 Node: p2 | Body: false
 ```
 
-*(Pendiente añadir evidencias de capturas/salidas de baja y alta en `iteration-2` e `iteration-3`).*
+Salida observada en `iteration-2` (puerto `8090`, réplicas `t1`/`t2` y `d1`/`d2`):
+
+```text
+GET http://localhost:8090/api/v1/temperature/?f=77 -> X-Node: t1 | Body: 298
+GET http://localhost:8090/api/v1/temperature/?f=77 -> X-Node: t2 | Body: 298
+GET http://localhost:8090/api/v1/distance/?km=10   -> X-Node: d2 | Body: 6.2137119223733395
+GET http://localhost:8090/api/v1/distance/?km=10   -> X-Node: d1 | Body: 6.2137119223733395
+```
+
+Salida observada en `iteration-3` (puerto `8080`, réplicas `b1`/`b2` para `v1` y `b3`/`b4` para `v2`):
+
+```text
+GET http://localhost:8080/api/v1/books/?genre=SCI_FI -> X-Node: b1 | Body: [{"id":"2","title":"Dune",...},{"id":"8","title":"The Hitchhiker's Guide to the Galaxy",...}]
+GET http://localhost:8080/api/v1/books/?genre=SCI_FI -> X-Node: b2 | Body: [{"id":"2","title":"Dune",...},{"id":"8","title":"The Hitchhiker's Guide to the Galaxy",...}]
+GET http://localhost:8080/api/v2/books/?title=Dune   -> X-Node: b3 | Body: {"id":"2","title":"Dune","author":"Frank Herbert","year":"1965","genre":"SCI_FI"}
+GET http://localhost:8080/api/v2/books/?title=Dune   -> X-Node: b4 | Body: {"id":"2","title":"Dune","author":"Frank Herbert","year":"1965","genre":"SCI_FI"}
+```
 
 ---
 
 ## Vídeo explicativo
 
-- **Enlace:** Pendiente (máximo 7 minutos).
+- **Enlace:** https://youtu.be/Z-QsCkbZ85s (duración máxima 7 minutos).
