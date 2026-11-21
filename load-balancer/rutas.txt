@@ -1,0 +1,43 @@
+====================================================
+RUTAS DE PRUEBA - KATA 5 (ITERATION 3)
+====================================================
+
+1) PETICIONES AL BALANCEADOR (NGINX - Puerto 8080)
+----------------------------------------------------
+- Books v1 (buscar por género):
+  http://localhost:8080/api/v1/books/?genre=SCI_FI
+  http://localhost:8080/api/v1/books/?genre=MEME
+
+- Books v2 (buscar por título):
+  http://localhost:8080/api/v2/books/?title=Dune
+  http://localhost:8080/api/v2/books/?title=1984
+
+
+2) CONSUL (Puerto 8500)
+----------------------------------------------------
+- Interfaz web (UI):
+  http://localhost:8500
+
+- Ver réplicas registradas de cada servicio:
+  http://localhost:8500/v1/health/service/books_service_v1
+  http://localhost:8500/v1/health/service/books_service_v2
+
+
+3) ARGUMENTOS DE ARRANQUE POR RÉPLICA (ID host puerto consul version)
+----------------------------------------------------
+- Books v1:
+  b1 localhost 8081 http://localhost:8500 v1
+  b2 localhost 8082 http://localhost:8500 v1
+
+- Books v2:
+  b3 localhost 8083 http://localhost:8500 v2
+  b4 localhost 8084 http://localhost:8500 v2
+
+
+4) COMANDOS ÚTILES (desde load-balancer/)
+----------------------------------------------------
+- Levantar Consul + NGINX:
+  docker compose up -d --wait
+
+- Recargar NGINX tras cambios de configuración:
+  docker compose restart nginx
